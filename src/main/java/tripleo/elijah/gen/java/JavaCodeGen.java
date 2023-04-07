@@ -1,10 +1,13 @@
 package tripleo.elijah.gen.java;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
+import antlr.Token;
 import javassist.*;
 import tripleo.elijah.gen.ICodeGen;
 import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.VariableReference.VR_Parts;
 import tripleo.elijah.util.NotImplementedException;
 
 public class JavaCodeGen implements ICodeGen {
@@ -99,7 +102,7 @@ public class JavaCodeGen implements ICodeGen {
 		} else {
 			if (element instanceof FunctionDef) {
 				FunctionDef fd = (FunctionDef) element;
-				System.out.print("void " + fd.funName + "(){\n");  // TODO: _returnType and mFal
+				System.out.print("void " + fd.funName + "(){\n"); // TODO: _returnType and mFal
 				fd.visit(this);
 				System.out.print("\n}\n\n");
 			} else if (element instanceof ClassStatement) {
@@ -110,6 +113,37 @@ public class JavaCodeGen implements ICodeGen {
 
 	public void addFunctionItem(FunctionItem element) {
 		// TODO Auto-generated method stub
+		if (element instanceof FunctionDef.StatementWrapper) {
+			FunctionDef.StatementWrapper statementWrapper = (FunctionDef.StatementWrapper) element;
+//			__afi_(statementWrapper.expr);
+			statementWrapper.visitGenExpr(new IExprGen() {
+
+				@Override
+				public void assignment(AbstractBinaryExpression abstractBinaryExpression, IExpression left,
+						IExpression right) {
+					left.visitGenExpr(this);
+					System.out.print(" = ");
+					right.visitGenExpr(this);
+					System.out.println(";");
+				}
+
+				@Override
+				public void variableReference(VariableReference variableReference, String name, List<VR_Parts> parts) {
+					System.out.print("vv" + name);
+				}
+
+				@Override
+				public void numericExpression(NumericExpression numericExpression, Token n) {
+					System.out.print("" + n.getText());
+				}
+
+			});
+		} else {
+			__afi_(element);
+		}
+	}
+
+	private void __afi_(FunctionItem element) {
 		if (element instanceof VariableSequence)
 			for (VariableStatement ii : ((VariableSequence) element).items()) {
 				// TODO Will eventually have to move this
@@ -117,7 +151,7 @@ public class JavaCodeGen implements ICodeGen {
 				if (ii.typeName().isNull()) {
 //					theType = "int"; // Z0*
 					theType = ii.initialValueType();
-				} else{
+				} else {
 					theType = ii.typeName().getName();
 				}
 				System.out.println(String.format("%s vv%s;", theType, ii.name));
@@ -125,19 +159,40 @@ public class JavaCodeGen implements ICodeGen {
 			}
 		else if (element instanceof ProcedureCallExpression) {
 			ProcedureCallExpression pce = (ProcedureCallExpression) element;
-			System.out.println(String.format("%s(%s);", pce./*target*/getLeft(), pce.exprList()));
+			ExpressionList exprList = pce.exprList();
+			
+			List<String> exprList2 = exprList.stream()
+					.map(exp -> {
+				if (exp instanceof StringExpression) {
+					final StringExpression stringExpression = (StringExpression) exp;
+					final String s=stringExpression.repr_();
+					return (s);
+				} else if (exp instanceof VariableReference) {
+					final VariableReference variableReference = (VariableReference) exp;
+					final String s = variableReference.getName();
+					return "vv"+s;
+				} else
+					throw new NotImplementedException();
+			}).collect(Collectors.toList());
+
+			System.out.println(String.format("%s(%s);", pce./* target */getLeft(), tripleo.elijah.util.Helpers .String_join(", ", exprList2)));
 		} else if (element instanceof Loop) {
-			Loop loop = (Loop)element;
+			Loop loop = (Loop) element;
 			if (loop.getType() == Loop.FROM_TO_TYPE) {
-				String varname="vt"+loop.getIterName();
-				System.out.println(String.format("{for (int %s=%d;%s<=%d;%s++){\n\t",
-						varname, ((OS_Integer)loop.getFromPart()).getValue(),
-						varname, ((OS_Integer)loop.getToPart()).getValue(),  varname));
+				String varname = "vt" + loop.getIterName();
+				System.out.println(String.format("{for (int %s=%d;%s<=%d;%s++){\n\t", varname,
+						((OS_Integer) loop.getFromPart()).getValue(), varname,
+						((OS_Integer) loop.getToPart()).getValue(), varname));
 				for (StatementItem item : loop.getItems()) {
-					System.out.println("\t"+item);
+					System.out.println("\t" + item);
 				}
 				System.out.println("}");
-			} else throw new NotImplementedException();
+			} else
+				throw new NotImplementedException();
+		} else if (element instanceof StringExpression) {
+			StringExpression stringExpression = (StringExpression) element;
+			IExpression left = stringExpression.getLeft();
+			System.out.println("" + left);
 		} else {
 			if (elementDone(element)) {
 				throw new NotImplementedException();
@@ -147,6 +202,12 @@ public class JavaCodeGen implements ICodeGen {
 			System.out.println(element);
 
 		}
+	}
+
+	@Override
+	public void functionDef(FunctionDef functionDef) {
+		// TODO Auto-generated method stub
+		int y=2;
 	}
 
 }

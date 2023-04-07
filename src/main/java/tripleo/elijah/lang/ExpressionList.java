@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Stream;
 
 
 /**
@@ -48,6 +49,10 @@ public class ExpressionList implements Iterable<IExpression> {
 	
 	public void add(IExpression aExpr) {
 		exprs.add(aExpr);
+	}
+
+	public Stream<IExpression> stream() {
+		return exprs.stream();
 	}
 }
 

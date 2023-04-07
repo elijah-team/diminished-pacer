@@ -23,7 +23,7 @@ import tripleo.elijah.gen.java.JavaCodeGen;
 import tripleo.elijah.util.TabbedOutputStream;
 
 public class FunctionDef implements ClassItem {
-	static class StatementWrapper implements StatementItem, FunctionItem {
+	public static class StatementWrapper implements StatementItem, FunctionItem {
 
 		private IExpression expr;
 
@@ -59,6 +59,10 @@ public class FunctionDef implements ClassItem {
 		public void visitGen(ICodeGen visit) {
 			// TODO Auto-generated method stub
 			
+		}
+		public void visitGenExpr(IExprGen visit) {
+			// TODO Auto-generated method stub
+			expr.visitGenExpr(visit);
 		}
 	}
 	
@@ -161,8 +165,7 @@ public class FunctionDef implements ClassItem {
 
 	@Override
 	public void visitGen(ICodeGen visit) {
-		// TODO Auto-generated method stub
-		
+		visit.functionDef(this);
 	}
 
 	public TypeName returnType() {

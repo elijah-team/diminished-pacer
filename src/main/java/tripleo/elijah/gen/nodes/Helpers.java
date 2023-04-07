@@ -69,4 +69,9 @@ public class Helpers {
 		sb.append(")");
 		return sb.toString();
 	}
+
+//	public static String String_join(String sep, List<String> list) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 }

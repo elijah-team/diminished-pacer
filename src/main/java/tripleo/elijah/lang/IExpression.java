@@ -46,4 +46,6 @@ public interface IExpression {
 //	}
 
 	boolean is_simple();
+
+	void visitGenExpr(IExprGen visit);
 }

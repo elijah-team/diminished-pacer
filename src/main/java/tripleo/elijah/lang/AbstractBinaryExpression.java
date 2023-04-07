@@ -17,6 +17,7 @@ package tripleo.elijah.lang;
 
 import java.io.IOException;
 
+import tripleo.elijah.util.NotImplementedException;
 import tripleo.elijah.util.TabbedOutputStream;
 
 // Referenced classes of package pak:
@@ -96,5 +97,10 @@ public class AbstractBinaryExpression implements IBinaryExpression, ScopeElement
 	public boolean is_simple() {
 		// TODO Auto-generated method stub
 		return false;
+	}
+
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		visit.assignment(this, left, right);
 	}
 }

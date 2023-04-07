@@ -136,7 +136,7 @@ public class VariableReference extends AbstractExpression implements OS_Expressi
 		return new ProcedureCallExpression();
 	}
 
-	interface VR_Parts {
+	public interface VR_Parts {
 	
 	}
 
@@ -194,6 +194,12 @@ public class VariableReference extends AbstractExpression implements OS_Expressi
 			this.text=aText;
 		}
 		
+	}
+
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		// TODO Auto-generated method stub
+		visit.variableReference(this, main, parts);
 	}
 }
 
