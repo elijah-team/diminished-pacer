@@ -88,6 +88,12 @@ public class CharLitExpression implements IExpression {
 		return true;
 	}
 
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
 //

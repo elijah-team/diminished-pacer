@@ -75,6 +75,11 @@ public class NumericExpression implements IExpression {
 	public boolean is_simple() {
 		return true;
 	}
+
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		visit.numericExpression(this, n);
+	}
 }
 
 //

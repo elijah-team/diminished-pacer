@@ -83,4 +83,9 @@ public class Qualident  implements IExpression {
 		// TODO Auto-generated method stub
 		return true;  // TODO is this true?
 	}
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		// TODO Auto-generated method stub
+		
+	}
 }

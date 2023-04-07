@@ -45,4 +45,9 @@ set(g.getText());
 
 	public void set(String g) {repr_ = g;}
 	String repr_;
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		// TODO Auto-generated method stub
+		
+	}
 }

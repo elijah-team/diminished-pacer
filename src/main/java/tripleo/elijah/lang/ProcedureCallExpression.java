@@ -157,6 +157,12 @@ public class ProcedureCallExpression implements StatementItem, FunctionItem, IEx
 	public ExpressionList getArgs() {
 		return args;
 	}
+
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 //

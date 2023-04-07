@@ -1,6 +1,7 @@
 package tripleo.elijah.gen;
 
 import tripleo.elijah.lang.ClassStatement;
+import tripleo.elijah.lang.FunctionDef;
 import tripleo.elijah.lang.FunctionItem;
 import tripleo.elijah.lang.OS_Module;
 
@@ -18,6 +19,8 @@ public interface ICodeGen {
 //	private void addClassItem(ClassItem element) ;
 
 	public void addFunctionItem(FunctionItem element) ;
+
+	public void functionDef(FunctionDef functionDef);
 }
 
 //

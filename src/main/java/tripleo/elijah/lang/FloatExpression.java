@@ -71,6 +71,12 @@ public class FloatExpression implements IExpression {
 	public boolean is_simple() {
 		return true;
 	}
+
+	@Override
+	public void visitGenExpr(IExprGen visit) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 
 //

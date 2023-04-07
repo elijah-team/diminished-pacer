@@ -32,6 +32,12 @@ public class ExpressionBuilder {
 			public boolean is_simple() {
 				return false; // TODO whoa
 			}
+
+			@Override
+			public void visitGenExpr(IExprGen visit) {
+				// TODO Auto-generated method stub
+				
+			}
 		};
 	}
 	
