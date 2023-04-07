@@ -39,8 +39,8 @@ public class Out {
 			pc.module.print_osi(tos);
 			pc.module.finish(tos);
 			//
-			XStream x = new XStream();
-			x.toXML(pc.module, tos.getStream());
+//			XStream x = new XStream();
+//			x.toXML(pc.module, tos.getStream());
 			//
 			final JavaCodeGen visit = new JavaCodeGen();
 			pc.module.visitGen(visit);

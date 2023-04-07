@@ -92,21 +92,21 @@ public class ClassStatement implements ClassItem, Scope, ModuleItem, OS_Element 
 
 	@Override
 	public void print_osi(TabbedOutputStream tos) throws IOException {
-		XStream x= new XStream();
-		x.toXML(this, tos.getStream());
-		//
-		System.out.println("Klass print_osi");
-		tos.incr_tabs();
-		tos.put_string("Class (");
-		tos.put_string(clsName);
-		tos.put_string_ln(") {");
-		tos.put_string_ln("//");
-		for (ClassItem item : items) {
-			item.print_osi(tos);
-		}
-		tos.dec_tabs();
-		tos.put_string_ln(String.format("} // class %s ", clsName));
-		tos.flush();
+//		XStream x= new XStream();
+//		x.toXML(this, tos.getStream());
+//		//
+//		System.out.println("Klass print_osi");
+//		tos.incr_tabs();
+//		tos.put_string("Class (");
+//		tos.put_string(clsName);
+//		tos.put_string_ln(") {");
+//		tos.put_string_ln("//");
+//		for (ClassItem item : items) {
+//			item.print_osi(tos);
+//		}
+//		tos.dec_tabs();
+//		tos.put_string_ln(String.format("} // class %s ", clsName));
+//		tos.flush();
 	}
 	
 	public String getName() {
